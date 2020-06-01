@@ -19,6 +19,9 @@
                     ".js"
                 ]
             }
+        ],
+        "import/no-extraneous-dependencies": [
+            1
         ]
     }
 }
