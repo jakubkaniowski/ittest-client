@@ -1,19 +1,33 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Button.module.scss';
+import styled from 'styled-components';
 
-const Button = ({ children }) => (
-  <button type="button" className={styles.wrapper}>
-    {children}
-  </button>
-);
+const Button = styled.button.attrs((props) => ({
+  type: props.type || 'button',
+  className: [...props.additionalClass].join(' ') || '',
+}))`
+  background-color: ${({ secondary, theme }) => (secondary ? `rgba(${theme.tertiaryDarken})` : `rgba(${theme.primary})`)};
+  color: ${({ secondary, theme }) => (secondary ? `rgb(${theme.white})` : `rgb(${theme.black})`)};
+  padding: ${({ large }) => (large ? '2.2rem 2.8rem' : '1.6rem 2.2rem')};
+  border-radius: ${({ large }) => (large ? '2.2rem' : '1.6rem')};
+  border: none;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+
+  ${({ block }) => block
+    && `
+      width: 100%;
+    `}
+`;
 
 Button.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  additionalClass: PropTypes.arrayOf(PropTypes.string),
 };
 
 Button.defaultProps = {
-  children: 'Button',
+  type: 'button',
+  additionalClass: ['button'],
 };
 
 export default Button;
