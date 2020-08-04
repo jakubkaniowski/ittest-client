@@ -1,17 +1,8 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyles from '../../theme/GlobalStyles';
-import { theme } from '../../theme/mainTheme';
+import AuthTemplate from '../../components/templates/AuthTemplate';
 
 const Root = () => (
-  <div>
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <>
-        <h1>Hello World</h1>
-      </>
-    </ThemeProvider>
-  </div>
+  <AuthTemplate><h1>hello</h1></AuthTemplate>
 );
 
 export default Root;

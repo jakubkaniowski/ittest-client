@@ -48,14 +48,21 @@ const StyledLabel = styled.label`
 `;
 
 const Input = ({
-  type, label, disabled, value, onChange, name,
+  type, label, disabled, value, onChange, name, block,
 }) => (
   <StyledWrapper>
-    <StyledLabel htmlFor={name}>{label}</StyledLabel>
+    <StyledLabel block={block} htmlFor={name}>{label}</StyledLabel>
     {type === 'textarea' ? (
       <StyledTextArea name={name} disabled={disabled} value={value} onChange={onChange} />
     ) : (
-      <StyledInput name={name} disabled={disabled} value={value} onChange={onChange} />
+      <StyledInput
+        block={block}
+        type={type}
+        name={name}
+        disabled={disabled}
+        value={value}
+        onChange={onChange}
+      />
     )}
   </StyledWrapper>
 );
@@ -67,11 +74,13 @@ Input.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
+  block: PropTypes.bool,
 };
 
 Input.defaultProps = {
   type: 'text',
   disabled: false,
+  block: false,
 };
 
 export default Input;
