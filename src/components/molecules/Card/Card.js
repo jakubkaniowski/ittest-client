@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   background-color: ${({ theme }) => `rgb(${theme.colors.white})`};
-  border-radius: 1rem;
+  border-radius: ${({ rounded }) => (rounded ? '1em' : '0')};
+  box-shadow: 0px 0px 20px -5px #000;
   min-width: 250px;
   width: 40vw;
 `;

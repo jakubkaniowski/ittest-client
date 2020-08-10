@@ -1,10 +1,15 @@
 import React, { useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import AuthTemplate from '../../components/templates/AuthTemplate';
 import Card from '../../components/molecules/Card/Card';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
-import Heading from '../../components/atoms/Heading/Heading';
+import logo from '../../theme/logo.png';
+
+const StyledLogo = styled.img`
+  margin: 0 auto;
+`;
 
 const Auth = () => {
   const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
@@ -36,7 +41,7 @@ const Auth = () => {
   switch (currentMode) {
     case 'Login':
       Component = (
-        <Card header="Logowanie">
+        <>
           <Input
             block
             name="login"
@@ -56,15 +61,15 @@ const Auth = () => {
           <Button block type="submit">
             Zaloguj
           </Button>
-          <Button secondary type="button" onClick={(e) => changeMode({ mode: 'Register' }, e)}>
+          <Button link block secondary onClick={(e) => changeMode({ mode: 'Register' }, e)}>
             Rejestracja
           </Button>
-        </Card>
+        </>
       );
       break;
     case 'Register':
       Component = (
-        <Card header="Rejestracja">
+        <>
           <Input
             block
             name="login"
@@ -92,10 +97,10 @@ const Auth = () => {
           <Button block type="submit">
             Zarejestruj
           </Button>
-          <Button secondary type="button" onClick={(e) => changeMode({ mode: 'Login' }, e)}>
+          <Button link block secondary onClick={(e) => changeMode({ mode: 'Login' }, e)}>
             Logowanie
           </Button>
-        </Card>
+        </>
       );
       break;
     default:
@@ -104,12 +109,12 @@ const Auth = () => {
 
   return (
     <AuthTemplate>
-      <Heading>
-        <h1>ITTest</h1>
-      </Heading>
-      <form onSubmit={onSubmitForm} method="POST">
-        {Component}
-      </form>
+      <Card>
+        <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
+        <form onSubmit={onSubmitForm} method="POST">
+          {Component}
+        </form>
+      </Card>
     </AuthTemplate>
   );
 };

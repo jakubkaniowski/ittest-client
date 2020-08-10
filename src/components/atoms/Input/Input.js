@@ -15,9 +15,9 @@ const StyledInput = styled.input.attrs((props) => ({
   background-color: ${({ disabled, theme }) => (disabled ? `rgb(${theme.colors.gray})` : `rgb(${theme.colors.white})`)};
   border: 1px solid ${({ theme }) => `rgb(${theme.colors.black})`};
   font-size: 1.6rem;
-  padding: 0.4rem;
+  padding: 0.6rem;
   margin-top: 0.5rem;
-  border-radius: 0.8rem;
+  border-radius: 0.3rem;
 
   ${({ block }) => block
     && `
@@ -51,7 +51,9 @@ const Input = ({
   type, label, disabled, value, onChange, name, block,
 }) => (
   <StyledWrapper>
-    <StyledLabel block={block} htmlFor={name}>{label}</StyledLabel>
+    <StyledLabel block={block} htmlFor={name}>
+      {label}
+    </StyledLabel>
     {type === 'textarea' ? (
       <StyledTextArea name={name} disabled={disabled} value={value} onChange={onChange} />
     ) : (
