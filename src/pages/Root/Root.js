@@ -1,8 +1,11 @@
 import React from 'react';
-import AuthTemplate from '../../components/templates/AuthTemplate';
+import { ROUTES, RenderRoutes } from '../../routing/routes';
+import MainTemplate from '../../components/templates/MainTemplate';
 
 const Root = () => (
-  <AuthTemplate><h1>hello</h1></AuthTemplate>
+  <MainTemplate>
+    <RenderRoutes routes={ROUTES} />
+  </MainTemplate>
 );
 
 export default Root;
