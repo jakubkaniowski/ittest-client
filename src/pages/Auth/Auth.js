@@ -1,122 +1,35 @@
-import React, { useReducer, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import AuthTemplate from '../../components/templates/AuthTemplate';
-import Card from '../../components/molecules/Card/Card';
-import Input from '../../components/atoms/Input/Input';
-import Button from '../../components/atoms/Button/Button';
-import logo from '../../theme/logo.png';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Login from './login/Login';
+import Register from './register/Register';
 
-const StyledLogo = styled.img`
-  margin: 0 auto;
-`;
+const ROUTES_TYPES = {
+  login: 'login',
+  register: 'register',
+};
 
-const Auth = () => {
-  const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
-    login: '',
-    password: '',
-    email: '',
-  });
-  const [currentMode, setCurrentMode] = useState('Login');
-  const history = useHistory();
+const Auth = ({ match }) => {
+  const { params } = match;
+  const type = params.type || '';
   let Component;
 
-  const changeMode = ({ mode = 'Login' }, e) => {
-    e.preventDefault();
-    setCurrentMode(mode);
-  };
-
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setInputValue({ [name]: value });
-  };
-
-  const onSubmitForm = (e) => {
-    e.preventDefault();
-    if (input.login && input.password) {
-      history.push('/app/teacher');
-    }
-  };
-
-  switch (currentMode) {
-    case 'Login':
-      Component = (
-        <>
-          <Input
-            block
-            name="login"
-            type="text"
-            label="Login"
-            value={input.login}
-            onChange={onChange}
-          />
-          <Input
-            block
-            name="password"
-            type="password"
-            label="Password"
-            value={input.password}
-            onChange={onChange}
-          />
-          <Button block type="submit">
-            Zaloguj
-          </Button>
-          <Button link block secondary onClick={(e) => changeMode({ mode: 'Register' }, e)}>
-            Rejestracja
-          </Button>
-        </>
-      );
+  switch (type.toLowerCase()) {
+    case ROUTES_TYPES.register:
+      Component = <Register />;
       break;
-    case 'Register':
-      Component = (
-        <>
-          <Input
-            block
-            name="login"
-            type="text"
-            label="Login"
-            value={input.login}
-            onChange={onChange}
-          />
-          <Input
-            block
-            name="Email"
-            type="email"
-            label="Email"
-            value={input.email}
-            onChange={onChange}
-          />
-          <Input
-            block
-            name="password"
-            type="password"
-            label="Password"
-            value={input.password}
-            onChange={onChange}
-          />
-          <Button block type="submit">
-            Zarejestruj
-          </Button>
-          <Button link block secondary onClick={(e) => changeMode({ mode: 'Login' }, e)}>
-            Logowanie
-          </Button>
-        </>
-      );
+    case ROUTES_TYPES.login:
+      Component = <Login />;
       break;
     default:
+      Component = <Login />;
       break;
   }
 
-  return (
-    <AuthTemplate>
-      <Card>
-        <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
-        <form onSubmit={onSubmitForm} method="POST">
-          {Component}
-        </form>
-      </Card>
-    </AuthTemplate>
-  );
+  return Component;
+};
+
+Auth.propTypes = {
+  match: PropTypes.oneOfType([PropTypes.object]),
 };
 
 export default Auth;

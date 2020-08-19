@@ -28,6 +28,9 @@
         ],
         "react/jsx-props-no-spreading": [
             1
+        ],
+        "import/no-cycle": [
+            1
         ]
     }
 }
