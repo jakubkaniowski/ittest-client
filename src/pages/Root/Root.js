@@ -1,8 +1,14 @@
 import React from 'react';
-import AuthTemplate from '../../components/templates/AuthTemplate';
+import { ROUTES, RenderRoutes } from '../../routing/routes';
+import MainTemplate from '../../components/templates/MainTemplate';
+import LoadingContextWrapper from '../../context/LoadingContext';
 
 const Root = () => (
-  <AuthTemplate><h1>hello</h1></AuthTemplate>
+  <MainTemplate>
+    <LoadingContextWrapper>
+      <RenderRoutes routes={ROUTES} />
+    </LoadingContextWrapper>
+  </MainTemplate>
 );
 
 export default Root;

@@ -1,100 +1,35 @@
-import React, { useReducer, useState, useEffect } from 'react';
-import AuthTemplate from '../../components/templates/AuthTemplate';
-import Card from '../../components/molecules/Card/Card';
-import Input from '../../components/atoms/Input/Input';
-import Button from '../../components/atoms/Button/Button';
-import Heading from '../../components/atoms/Heading/Heading';
-import styles from './Auth.module.scss';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Login from './login/Login';
+import Register from './register/Register';
 
-const Auth = () => {
-  const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
-    login: '',
-    password: '',
-    email: '',
-  });
-  const [registerMode, setRegisterMode] = useState(false);
-  const [animate, setAnimate] = useState(false);
+const ROUTES_TYPES = {
+  login: 'login',
+  register: 'register',
+};
 
-  const changeMode = ({ cancel }) => {
-    if (cancel) {
-      setAnimate(false);
-      setRegisterMode(false);
-    }
-    setAnimate(true);
-    setRegisterMode(true);
-  };
+const Auth = ({ match }) => {
+  const { params } = match;
+  const type = params.type || '';
+  let Component;
 
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setInputValue({ [name]: value });
-  };
+  switch (type.toLowerCase()) {
+    case ROUTES_TYPES.register:
+      Component = <Register />;
+      break;
+    case ROUTES_TYPES.login:
+      Component = <Login />;
+      break;
+    default:
+      Component = <Login />;
+      break;
+  }
 
-  useEffect(() => {
-    if (animate && registerMode) {
-      changeMode({ cancel: true });
-    }
-  }, [animate, registerMode]);
+  return Component;
+};
 
-  return (
-    <AuthTemplate>
-      <Heading>
-        <h1>ITTest</h1>
-      </Heading>
-      <div className={animate ? styles.animatedWrapper : ''}>
-        {!registerMode ? (
-          <Card header="Logowanie">
-            <Input
-              block
-              name="login"
-              type="text"
-              label="Login"
-              value={input.login}
-              onChange={onChange}
-            />
-            <Input
-              block
-              name="password"
-              type="password"
-              label="Password"
-              value={input.password}
-              onChange={onChange}
-            />
-            <Button>Zaloguj</Button>
-            <Button secondary onClick={changeMode}>Rejestracja</Button>
-          </Card>
-        ) : (
-          <Card header="Rejestracja">
-            <Input
-              block
-              name="login"
-              type="text"
-              label="Login"
-              value={input.login}
-              onChange={onChange}
-            />
-            <Input
-              block
-              name="Email"
-              type="email"
-              label="Email"
-              value={input.email}
-              onChange={onChange}
-            />
-            <Input
-              block
-              name="password"
-              type="password"
-              label="Password"
-              value={input.password}
-              onChange={onChange}
-            />
-            <Button>Zarejestruj</Button>
-            <Button secondary onClick={changeMode}>Logowanie</Button>
-          </Card>
-        )}
-      </div>
-    </AuthTemplate>
-  );
+Auth.propTypes = {
+  match: PropTypes.oneOfType([PropTypes.object]),
 };
 
 export default Auth;
