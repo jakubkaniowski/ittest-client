@@ -12,7 +12,7 @@ const StyledLogo = styled.img`
   margin: 0 auto;
 `;
 
-const pageName = 'register';
+const pageName = 'auth/register';
 
 const Auth = () => {
   const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
