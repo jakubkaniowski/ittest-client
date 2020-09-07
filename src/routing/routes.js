@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Auth from '../pages/Auth/Auth';
-import Homepage from '../pages/Student/Homepage';
+import TeacherDashboard from '../pages/Teacher/TeacherDashboard';
+import StudentDashboard from '../pages/Student/StudentDashboard';
 
 export const RouteWithSubRoutes = (route = {}) => (
   <Route
@@ -40,13 +41,13 @@ export const ROUTES = [
     path: '/teacher',
     key: 'APP_TEACHER',
     exact: true,
-    component: () => <h1>App Teacher</h1>,
+    component: TeacherDashboard,
   },
   {
     path: '/student',
     key: 'APP_STUDENT',
     exact: true,
-    component: Homepage,
+    component: StudentDashboard,
   },
 ];
 
