@@ -5,6 +5,7 @@ import DashboardTemplate from '../../components/templates/DashboardTemplate';
 import Heading from '../../components/atoms/Heading/Heading';
 import { useLoadingContext } from '../../context/LoadingContext';
 import TopicServices from '../../services/TopicServices';
+import Paragraph from '../../components/atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -105,7 +106,9 @@ const StudentLearnCategory = ({ match }) => {
             return (
               <StyledDetails key={id}>
                 <summary>{categoryTopic}</summary>
-                <div>{description}</div>
+                <div>
+                  <Paragraph bold>{description}</Paragraph>
+                </div>
               </StyledDetails>
             );
           })}
@@ -116,7 +119,11 @@ const StudentLearnCategory = ({ match }) => {
 };
 
 StudentLearnCategory.propTypes = {
-  match: PropTypes.string,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      category: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 StudentLearnCategory.defaultProps = {

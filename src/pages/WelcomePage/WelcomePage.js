@@ -5,6 +5,7 @@ import AuthTemplate from '../../components/templates/AuthTemplate';
 import Card from '../../components/molecules/Card/Card';
 import logo from '../../theme/logo.png';
 import { PathCreator } from '../../routing/routes';
+import Paragraph from '../../components/atoms/Paragraph/Paragraph';
 
 const StyledLogo = styled.img`
   margin: 15px auto;
@@ -37,15 +38,11 @@ const StyledAccount = styled.a`
   }
 `;
 
-const StyledParagraph = styled.p`
-  text-align: center;
-`;
-
 const WelcomePage = () => (
   <AuthTemplate>
     <Card>
       <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
-      <StyledParagraph>Wybierz swój typ konta</StyledParagraph>
+      <Paragraph align="center">Wybierz swój typ konta</Paragraph>
       <StyledRow>
         <StyledAccount href={PathCreator({ path: 'auth/student' })}>Student</StyledAccount>
         <StyledAccount href={PathCreator({ path: 'auth/teacher' })}>Nauczyciel</StyledAccount>

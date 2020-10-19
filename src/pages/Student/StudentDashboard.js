@@ -6,6 +6,7 @@ import DashboardTemplate from '../../components/templates/DashboardTemplate';
 import Heading from '../../components/atoms/Heading/Heading';
 import Card from '../../components/molecules/Card/Card';
 import { PathCreator } from '../../routing/routes';
+import Paragraph from '../../components/atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -24,11 +25,8 @@ const StyledHeading = styled(Heading)`
   font-size: ${({ theme }) => theme.fontSizes.xl};
 `;
 
-const StyledParagraph = styled.p`
-  font-size: ${({ theme }) => theme.fontSizes.m};
+const StyledParagraph = styled(Paragraph)`
   margin-top: 1em;
-  font-weight: 300;
-  color: ${({ theme }) => `rgba(${theme.colors.black})`};
 `;
 
 const StyledRow = styled.div`
