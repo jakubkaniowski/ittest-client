@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import MainTemplate from './MainTemplate';
 
 const StyledWrapper = styled.main`
-  background-color: ${({ theme }) => `rgba(${theme.colors.primary})`};
+  background-color: ${({ theme }) => `rgba(${theme.colors.secondary})`};
   display: flex;
   flex-direction: column;
   min-height: 100vh;

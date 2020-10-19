@@ -4,8 +4,8 @@ import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 
 const styles = css`
-  background-color: ${({ secondary, theme }) => (secondary ? `rgba(${theme.colors.tertiaryDarken})` : `rgba(${theme.colors.primary})`)};
-  color: ${({ secondary, theme }) => (secondary ? `rgb(${theme.colors.white})` : `rgb(${theme.colors.black})`)};
+  background-color: ${({ secondary, theme }) => (secondary ? `rgba(${theme.colors.secondary})` : `rgba(${theme.colors.primary})`)};
+  color: ${({ theme }) => `rgba(${theme.colors.white})`};
   padding: ${({ large }) => (large ? '2.2rem 2.8rem' : '1.6rem 2.2rem')};
   border-radius: ${({ large }) => (large ? '1.6rem' : '0.5rem')};
   border: none;
@@ -25,7 +25,7 @@ const styles = css`
 
   &:hover {
     background-color: ${({ theme, secondary }) => (secondary
-    ? `${darken(0.15, `rgb(${theme.colors.tertiaryDarken})`)}`
+    ? `${darken(0.05, `rgb(${theme.colors.secondary})`)}`
     : `${darken(0.15, `rgb(${theme.colors.primary})`)}`)};
   }
 `;

@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import Auth from '../pages/Auth/Auth';
 import TeacherDashboard from '../pages/Teacher/TeacherDashboard';
 import StudentDashboard from '../pages/Student/StudentDashboard';
+import WelcomePage from '../pages/WelcomePage/WelcomePage';
+import StudentLearn from '../pages/Student/StudentLearn';
+import StudentLearnCategory from '../pages/Student/StudentLearnCategory';
 
 export const RouteWithSubRoutes = (route = {}) => (
   <Route
     path={route.path}
     exact={route.exact}
-    component={(props) => <route.component {...props} routes={route.routes} />}
+    render={(props) => <route.component {...props} routes={route.routes} />}
   />
 );
 
@@ -29,13 +32,21 @@ export const ROUTES = [
     path: '/',
     key: 'ROOT',
     exact: true,
-    component: Auth,
+    component: WelcomePage,
   },
   {
-    path: '/auth/:type?',
+    path: '/auth',
     key: 'AUTH',
-    exact: true,
-    component: Auth,
+    exact: false,
+    component: RenderRoutes,
+    routes: [
+      {
+        path: '/auth/:type',
+        key: 'AUTH',
+        exact: true,
+        component: Auth,
+      },
+    ],
   },
   {
     path: '/teacher',
@@ -46,8 +57,34 @@ export const ROUTES = [
   {
     path: '/student',
     key: 'APP_STUDENT',
-    exact: true,
-    component: StudentDashboard,
+    exact: false,
+    component: RenderRoutes,
+    routes: [
+      {
+        path: '/student',
+        key: 'APP_STUDENT_DASHBOARD',
+        exact: true,
+        component: StudentDashboard,
+      },
+      {
+        path: '/student/learn',
+        key: 'APP_STUDENT_STUDY',
+        exact: true,
+        component: StudentLearn,
+      },
+      {
+        path: '/student/learn/:category',
+        key: 'APP_STUDENT_STUDY_CATEGORY',
+        exact: true,
+        component: StudentLearnCategory,
+      },
+      {
+        path: '/student/tests',
+        key: 'APP_STUDENT_TESTS',
+        exact: true,
+        component: () => <h1>TESTY</h1>,
+      },
+    ],
   },
 ];
 

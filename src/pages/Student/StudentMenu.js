@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faFile } from '@fortawesome/free-solid-svg-icons';
+import { darken } from 'polished';
 
 const StyledMenu = styled.div`
   display: flex;
@@ -10,11 +11,19 @@ const StyledMenu = styled.div`
 `;
 
 const StyledMenuItem = styled.a`
-  margin: 0 10px;
+  margin: 0 5px;
+  padding: 10px 15px;
+  border: 1px solid ${({ theme }) => `rgba(${theme.colors.black})`};
+  border-radius: 5px;
   text-transform: uppercase;
   font-weight: 600;
   text-decoration: none;
   color: ${({ theme }) => `rgba(${theme.colors.black})`};
+  transition: background-color 300ms;
+
+  &:hover {
+    background-color: ${({ theme }) => `${darken(0.05, `rgb(${theme.colors.primary})`)}`};
+  }
 `;
 
 const StyledMenuItemText = styled.span`

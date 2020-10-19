@@ -4,13 +4,13 @@ import Loading from '../utils/Loading';
 
 const LoadingContext = createContext();
 
-export const useLoadingContenxt = () => useContext(LoadingContext);
+export const useLoadingContext = () => useContext(LoadingContext);
 
 const LoadingContextWrapper = ({ children }) => {
   const [toggle, handleToggle] = useState(false);
 
-  const handleToggleChange = () => {
-    handleToggle(!toggle);
+  const handleToggleChange = ({ isLoading = false }) => {
+    handleToggle(isLoading);
   };
 
   return (

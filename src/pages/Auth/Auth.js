@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Login from './login/Login';
 import Register from './register/Register';
@@ -11,21 +11,28 @@ const ROUTES_TYPES = {
 const Auth = ({ match }) => {
   const { params } = match;
   const type = params.type || '';
-  let Component;
-
-  switch (type.toLowerCase()) {
-    case ROUTES_TYPES.register:
-      Component = <Register />;
-      break;
+  const [currentRoute, setCurrentRoute] = useState('login');
+  let component;
+  switch (currentRoute.toLowerCase()) {
     case ROUTES_TYPES.login:
-      Component = <Login />;
+      component = (
+        <Login setCurrentRoute={setCurrentRoute} currentRoute={currentRoute} accountType={type} />
+      );
+      break;
+    case ROUTES_TYPES.register:
+      component = (
+        <Register
+          setCurrentRoute={setCurrentRoute}
+          currentRoute={currentRoute}
+          accountType={type}
+        />
+      );
       break;
     default:
-      Component = <Login />;
       break;
   }
 
-  return Component;
+  return component;
 };
 
 Auth.propTypes = {

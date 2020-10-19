@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthTemplate from '../../../components/templates/AuthTemplate';
@@ -6,15 +7,12 @@ import Card from '../../../components/molecules/Card/Card';
 import Input from '../../../components/atoms/Input/Input';
 import Button from '../../../components/atoms/Button/Button';
 import logo from '../../../theme/logo.png';
-import { PathCreator } from '../../../routing/routes';
 
 const StyledLogo = styled.img`
   margin: 0 auto;
 `;
 
-const pageName = '';
-
-const Auth = () => {
+const Register = ({ setCurrentRoute, accountType }) => {
   const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
     login: '',
     password: '',
@@ -30,7 +28,7 @@ const Auth = () => {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (input.login && input.password) {
-      history.push('/app/teacher');
+      history.push(`/${accountType}`);
     }
   };
 
@@ -66,7 +64,7 @@ const Auth = () => {
           <Button block type="submit">
             Zarejestruj
           </Button>
-          <Button link block secondary href={PathCreator({ path: pageName })}>
+          <Button block secondary onClick={() => setCurrentRoute('login')}>
             Logowanie
           </Button>
         </form>
@@ -75,4 +73,14 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+Register.propTypes = {
+  setCurrentRoute: PropTypes.func,
+  accountType: PropTypes.oneOf(['register', 'login']),
+};
+
+Register.defaultProps = {
+  setCurrentRoute: () => {},
+  accountType: 'login',
+};
+
+export default Register;

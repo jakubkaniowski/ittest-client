@@ -10,7 +10,7 @@ const StyledSection = styled.section`
   min-height: 100vh;
   position: relative;
   padding-top: 70px;
-  background-color: ${({ theme }) => `rgba(${theme.colors.white})`};
+  background-color: ${({ theme }) => `rgba(${theme.colors.gray})`};
 `;
 
 const DashboardTemplate = ({ children }) => (

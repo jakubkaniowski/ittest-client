@@ -13,7 +13,8 @@ const StyledWrapper = styled.header`
   top: 0;
   left: 0;
   padding: 20px 30px;
-  background-color: ${({ theme }) => `rgba(${theme.colors.tertiary})`};
+  background-color: ${({ theme }) => `rgb(${theme.colors.primary})`};
+  transition: 300ms background-color;
 `;
 
 const Navbar = () => (
