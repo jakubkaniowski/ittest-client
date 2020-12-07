@@ -30,9 +30,7 @@ const StyledParagraph = styled(Paragraph)`
   margin-top: 1em;
 `;
 
-const StyledRow = styled.div`
-  padding: 0 30px;
-`;
+const StyledRow = styled.div``;
 
 const StyledCard = styled(Card)`
   width: 100%;
@@ -72,10 +70,10 @@ const StudentLearn = () => {
       const { categories: receivedCategories } = response.data;
 
       handleSetCategories({ categoriesArray: receivedCategories });
-      loadingContext({ isLoading: false });
     } catch (error) {
-      loadingContext({ isLoading: false });
       console.error(error);
+    } finally {
+      loadingContext({ isLoading: false });
     }
   };
 

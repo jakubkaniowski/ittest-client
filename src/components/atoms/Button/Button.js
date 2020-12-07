@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 
 const styles = css`
-  background-color: ${({ secondary, theme }) => (secondary ? `rgba(${theme.colors.secondary})` : `rgba(${theme.colors.primary})`)};
+  background-color: ${({ color, theme }) => (color ? `rgba(${theme.colors[color]})` : `rgba(${theme.colors.primary})`)};
   color: ${({ theme }) => `rgba(${theme.colors.white})`};
   padding: ${({ large }) => (large ? '2.2rem 2.8rem' : '1.6rem 2.2rem')};
   border-radius: ${({ large }) => (large ? '1.6rem' : '0.5rem')};
@@ -17,16 +17,19 @@ const styles = css`
   cursor: pointer;
   transition: 300ms background-color;
 
-  ${({ block }) => block
+  ${({ disabled }) => disabled
     && `
-    width: 100%;
-    display: block;
+    opacity: .65;
   `}
 
   &:hover {
-    background-color: ${({ theme, secondary }) => (secondary
-    ? `${darken(0.05, `rgb(${theme.colors.secondary})`)}`
+    background-color: ${({ theme, color }) => (color
+    ? `${darken(0.05, `rgb(${theme.colors[color]})`)}`
     : `${darken(0.15, `rgb(${theme.colors.primary})`)}`)};
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -55,7 +58,7 @@ const Button = (props) => {
 };
 
 Button.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   type: PropTypes.string,
   additionalClass: PropTypes.arrayOf(PropTypes.string),
   href: PropTypes.string,

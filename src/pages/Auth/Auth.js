@@ -8,31 +8,21 @@ const ROUTES_TYPES = {
   register: 'register',
 };
 
-const Auth = ({ match }) => {
-  const { params } = match;
-  const type = params.type || '';
+const Auth = () => {
   const [currentRoute, setCurrentRoute] = useState('login');
-  let component;
+  let Component;
   switch (currentRoute.toLowerCase()) {
     case ROUTES_TYPES.login:
-      component = (
-        <Login setCurrentRoute={setCurrentRoute} currentRoute={currentRoute} accountType={type} />
-      );
+      Component = <Login setCurrentRoute={setCurrentRoute} currentRoute={currentRoute} />;
       break;
     case ROUTES_TYPES.register:
-      component = (
-        <Register
-          setCurrentRoute={setCurrentRoute}
-          currentRoute={currentRoute}
-          accountType={type}
-        />
-      );
+      Component = <Register setCurrentRoute={setCurrentRoute} currentRoute={currentRoute} />;
       break;
     default:
       break;
   }
 
-  return component;
+  return Component;
 };
 
 Auth.propTypes = {

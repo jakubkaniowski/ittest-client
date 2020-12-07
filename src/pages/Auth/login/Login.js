@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AuthTemplate from '../../../components/templates/AuthTemplate';
@@ -18,8 +17,6 @@ const Login = ({ setCurrentRoute, accountType }) => {
     password: '',
   });
 
-  const history = useHistory();
-
   const onChange = (event) => {
     const { name, value } = event.target;
     setInputValue({ [name]: value });
@@ -28,13 +25,14 @@ const Login = ({ setCurrentRoute, accountType }) => {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (input.login && input.password) {
-      history.push(`/${accountType}`);
+      window.localStorage.setItem('token', 'token1234');
+      window.location.replace(`/${accountType}`);
     }
   };
 
   return (
     <AuthTemplate>
-      <Card>
+      <Card style={{ width: '50%' }}>
         <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
         <form onSubmit={onSubmitForm} method="POST">
           <Input

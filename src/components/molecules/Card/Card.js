@@ -6,8 +6,6 @@ const StyledWrapper = styled.div`
   background-color: ${({ bgColor, theme }) => (bgColor ? `rgba(${theme.colors[bgColor]})` : `rgba(${theme.colors.white})`)};
   border-radius: ${({ rounded }) => (rounded ? '1em' : '0')};
   box-shadow: 0px 0px 20px -5px #000;
-  min-width: 250px;
-  width: 40vw;
   display: flex;
   flex-direction: column;
 `;
@@ -27,7 +25,6 @@ const StyledHeader = styled.h1`
 
 const StyledBody = styled.article`
   display: flex;
-  min-width: 175px;
   height: 100%;
   flex-direction: column;
   padding: 2rem;
@@ -43,7 +40,7 @@ const Card = ({
 );
 
 Card.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   header: PropTypes.string,
   className: PropTypes.string,
   bgColor: PropTypes.string,

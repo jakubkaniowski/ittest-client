@@ -6,7 +6,8 @@
         "airbnb/hooks"    
     ],
     "env": {
-        "jest": true
+        "jest": true,
+        "browser": true
     },
     "globals": {
         "document": true

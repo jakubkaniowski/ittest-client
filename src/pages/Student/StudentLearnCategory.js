@@ -24,9 +24,7 @@ const StyledHeading = styled(Heading)`
   font-size: ${({ theme }) => theme.fontSizes.xl};
 `;
 
-const StyledRow = styled.div`
-  padding: 0 30px;
-`;
+const StyledRow = styled.div``;
 
 const fadeInKeyframe = keyframes`
   0% {
