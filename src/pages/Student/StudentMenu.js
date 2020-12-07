@@ -1,14 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { darken } from 'polished';
-
-const StyledMenu = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
 
 const StyledMenuItem = styled.a`
   margin: 0 5px;
@@ -24,6 +18,11 @@ const StyledMenuItem = styled.a`
   &:hover {
     background-color: ${({ theme }) => `${darken(0.05, `rgb(${theme.colors.primary})`)}`};
   }
+
+  @media (max-width: 768px) {
+    margin: 10px 0;
+    width: 100%;
+  }
 `;
 
 const StyledMenuItemText = styled.span`
@@ -31,16 +30,12 @@ const StyledMenuItemText = styled.span`
 `;
 
 const StudentMenu = () => (
-  <StyledMenu>
+  <>
     <StyledMenuItem href="">
       <FontAwesomeIcon icon={faUser} cursor="pointer" />
       <StyledMenuItemText>Profil</StyledMenuItemText>
     </StyledMenuItem>
-    <StyledMenuItem href="">
-      <FontAwesomeIcon icon={faFile} cursor="pointer" />
-      <StyledMenuItemText>Zadania</StyledMenuItemText>
-    </StyledMenuItem>
-  </StyledMenu>
+  </>
 );
 
 export default StudentMenu;

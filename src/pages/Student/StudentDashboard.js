@@ -30,10 +30,11 @@ const StyledParagraph = styled(Paragraph)`
 `;
 
 const StyledRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-gap: 15px;
+  margin: 0 auto;
+  max-width: 95%;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 `;
 
 const StyledLinkBox = styled.a`
@@ -41,13 +42,11 @@ const StyledLinkBox = styled.a`
 `;
 
 const StyledCard = styled(Card)`
-  margin: 20px;
-  flex: 1 1 300px;
   height: 400px;
   transition: 300ms transform;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 `;
 

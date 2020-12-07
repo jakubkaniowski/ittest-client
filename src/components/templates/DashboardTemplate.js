@@ -9,15 +9,20 @@ const StyledSection = styled.section`
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-  padding-top: 70px;
   background-color: ${({ theme }) => `rgba(${theme.colors.gray})`};
+`;
+
+const StyledContent = styled.div`
+  display: flex;
+  flex: 1;
+  padding: 15px;
 `;
 
 const DashboardTemplate = ({ children }) => (
   <MainTemplate>
     <StyledSection>
       <Navbar />
-      {children}
+      <StyledContent>{children}</StyledContent>
     </StyledSection>
   </MainTemplate>
 );
