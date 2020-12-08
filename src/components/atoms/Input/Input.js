@@ -6,66 +6,85 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+  height: 45px;
+  position: relative;
+  overflow: hidden;
 `;
 
-const StyledInput = styled.input.attrs((props) => ({
-  type: props.type || 'text',
-}))`
+const StyledInput = styled.input`
   background-color: ${({ disabled, theme }) => (disabled ? `rgb(${theme.colors.gray})` : `rgb(${theme.colors.white})`)};
-  border: 1px solid ${({ theme }) => `rgb(${theme.colors.black})`};
+  border: none;
+  outline: none;
   font-size: 1.6rem;
-  padding: 0.6rem;
-  margin-top: 0.5rem;
-  border-radius: 0.3rem;
+  padding-top: 20px;
+  height: 100%;
 
   ${({ block }) => block
     && `
       width: 100%;
     `}
-`;
 
-const StyledTextArea = styled.textarea.attrs((props) => ({
-  rows: props.rows || 5,
-  cols: props.cols || 20,
-}))`
-  background-color: ${({ disabled, theme }) => (disabled ? `rgb(${theme.colors.gray})` : `rgb(${theme.colors.white})`)};
-  border: 1px solid ${({ theme }) => `rgb(${theme.colors.black})`};
-  border-radius: 0.8rem;
-  font-size: 1.6rem;
-  padding: 0.3rem;
-  margin-top: 0.5rem;
-  resize: none;
+  &:focus + label > span, &:valid + label > span {
+    transform: translateY(-140%);
+    color: ${({ theme }) => `rgb(${theme.colors.primary})`};
+    font-size: 14px;
+  }
 
-  ${({ block }) => block
-    && `
-        width: 100%;
-      `}
+  &:focus + label::after,
+  &:valid + label::after {
+    transform: translateX(0);
+  }
 `;
 
 const StyledLabel = styled.label`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  transition: transform 300ms;
+  pointer-events: none;
   text-transform: capitalize;
+  border-bottom: 1px solid ${({ theme }) => `rgb(${theme.colors.black})`};
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid ${({ theme }) => `rgb(${theme.colors.primary})`};
+    transform: translateX(-100%);
+    transition: transform 300ms ease;
+  }
+`;
+
+const StyledLabelContent = styled.span`
+  position: absolute;
+  left: 0;
+  bottom: 5px;
+  transition: all 200ms ease-in;
+  font-size: ${({ theme }) => theme.fontSizes.m};
 `;
 
 const Input = ({
-  type, label, disabled, value, onChange, name, block,
+  type, label, disabled, value, onChange, name, block, required,
 }) => (
   <StyledWrapper>
+    <StyledInput
+      block={block}
+      type={type}
+      name={name}
+      disabled={disabled}
+      value={value}
+      onChange={onChange}
+      required={required}
+    />
     <StyledLabel block={block} htmlFor={name}>
-      {label}
+      <StyledLabelContent>{label}</StyledLabelContent>
     </StyledLabel>
-    {type === 'textarea' ? (
-      <StyledTextArea name={name} disabled={disabled} value={value} onChange={onChange} />
-    ) : (
-      <StyledInput
-        block={block}
-        type={type}
-        name={name}
-        disabled={disabled}
-        value={value}
-        onChange={onChange}
-      />
-    )}
   </StyledWrapper>
 );
 
@@ -77,12 +96,14 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   block: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 Input.defaultProps = {
   type: 'text',
   disabled: false,
   block: false,
+  required: false,
 };
 
 export default Input;
