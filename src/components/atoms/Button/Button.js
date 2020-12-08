@@ -22,6 +22,11 @@ const styles = css`
     opacity: .65;
   `}
 
+  ${({ block }) => block
+    && `
+    width: 100%;
+  `}
+
   &:hover {
     background-color: ${({ theme, color }) => (color
     ? `${darken(0.05, `rgb(${theme.colors[color]})`)}`

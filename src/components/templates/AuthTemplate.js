@@ -7,8 +7,9 @@ const StyledWrapper = styled.main`
   background-color: ${({ theme }) => `rgba(${theme.colors.secondary})`};
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   align-items: center;
+  min-height: 100%;
+  padding: 20px 0;
   justify-content: center;
 `;
 

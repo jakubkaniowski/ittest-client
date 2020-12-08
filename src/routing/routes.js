@@ -7,18 +7,9 @@ import StudentLearn from '../pages/Student/StudentLearn';
 import StudentLearnCategory from '../pages/Student/StudentLearnCategory';
 import StudentTests from '../pages/Student/StudentTests';
 import StudentTest from '../pages/Student/StudentTest';
-import { useUserContext } from '../context/UserContext';
 
 export const RouteWithSubRoutes = (route = {}) => {
   const token = localStorage.getItem('token');
-  const { accountType } = useUserContext();
-
-  if (accountType && route.role !== accountType && route.authorize) {
-    setTimeout(() => {
-      window.location.replace(`/${accountType.toLowerCase()}`);
-    }, 3000);
-    return <Route render={() => <UnauthorizedComponent />} />;
-  }
 
   if (route.authorize === true && !token) {
     setTimeout(() => {
@@ -39,7 +30,7 @@ export const RouteWithSubRoutes = (route = {}) => {
 
 export const UnauthorizedComponent = () => (
   <div>
-    <h2 className="mt-0">403 Unauthorized.</h2>
+    <h2>403 Unauthorized.</h2>
     Redirecting...
     <br />
     <br />

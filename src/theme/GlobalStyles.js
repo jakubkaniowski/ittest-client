@@ -14,11 +14,20 @@ const GlobalStyles = createGlobalStyle`
 
     html {
         font-size: 62.5%;
+        min-height: 100%;
+        height: 100%;
     }
 
     body {
         font-size: 1.6rem;
         font-family: 'Fira Sans', sans-serif;
+        min-height: 100%;
+        height: 100%;
+    }
+
+    #root {
+        min-height: 100%;
+        height: 100%;
     }
 `;
 
