@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { faGraduationCap, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import DashboardTemplate from '../../components/templates/DashboardTemplate';
 import Heading from '../../components/atoms/Heading/Heading';
 import Card from '../../components/molecules/Card/Card';
@@ -32,12 +33,10 @@ const StyledParagraph = styled(Paragraph)`
 const StyledRow = styled.div`
   display: grid;
   grid-gap: 15px;
-  margin: 0 auto;
-  max-width: 95%;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 `;
 
-const StyledLinkBox = styled.a`
+const StyledLinkBox = styled(Link)`
   text-decoration: none;
 `;
 
@@ -68,8 +67,8 @@ const StudentDashboard = () => (
         </StyledParagraph>
       </StyledHeading>
       <StyledRow>
-        <StyledLinkBox href={PathCreator({ path: 'student/learn' })}>
-          <StyledCard header="Nauka">
+        <StyledLinkBox to={PathCreator({ pathname: 'student/learn' })}>
+          <StyledCard rounded header="Nauka">
             <StyledCardContent>
               <FontAwesomeIcon
                 icon={faGraduationCap}
@@ -83,8 +82,8 @@ const StudentDashboard = () => (
             </StyledCardContent>
           </StyledCard>
         </StyledLinkBox>
-        <StyledLinkBox href={PathCreator({ path: 'student/tests' })}>
-          <StyledCard header="Testy">
+        <StyledLinkBox to={PathCreator({ pathname: 'student/tests' })}>
+          <StyledCard rounded header="Testy">
             <StyledCardContent>
               <FontAwesomeIcon icon={faFileAlt} size="8x" style={{ color: 'rgba(87, 167, 115)' }} />
               <StyledParagraph>

@@ -117,7 +117,7 @@ const StudentTests = () => {
           <StyledGrid>
             {tests.length ? (
               tests.map((test) => (
-                <StyledCard key={test.id} header={test.topic}>
+                <StyledCard rounded key={test.id} header={test.topic}>
                   <Paragraph>
                     Ostatnia odpowiedź do pytania nr.
                     {test.lastAnswered}

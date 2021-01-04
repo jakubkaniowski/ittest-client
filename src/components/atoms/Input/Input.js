@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   height: 45px;
   position: relative;
   overflow: hidden;
@@ -69,23 +69,31 @@ const StyledLabelContent = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.m};
 `;
 
+const ErrorMessage = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.ms};
+  color: ${({ theme }) => `rgb(${theme.colors.danger})`};
+`;
+
 const Input = ({
-  type, label, disabled, value, onChange, name, block, required,
+  type, label, disabled, value, onChange, name, block, required, validation,
 }) => (
-  <StyledWrapper>
-    <StyledInput
-      block={block}
-      type={type}
-      name={name}
-      disabled={disabled}
-      value={value}
-      onChange={onChange}
-      required={required}
-    />
-    <StyledLabel block={block} htmlFor={name}>
-      <StyledLabelContent>{label}</StyledLabelContent>
-    </StyledLabel>
-  </StyledWrapper>
+  <>
+    <StyledWrapper>
+      <StyledInput
+        block={block}
+        type={type}
+        name={name}
+        disabled={disabled}
+        value={value}
+        onChange={onChange}
+        required={required}
+      />
+      <StyledLabel block={block} htmlFor={name}>
+        <StyledLabelContent>{label}</StyledLabelContent>
+      </StyledLabel>
+    </StyledWrapper>
+    {validation.errors && <ErrorMessage>{validation.errors[name]}</ErrorMessage>}
+  </>
 );
 
 Input.propTypes = {
@@ -97,6 +105,10 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   block: PropTypes.bool,
   required: PropTypes.bool,
+  validation: PropTypes.shape({
+    errors: PropTypes.array,
+    message: PropTypes.string,
+  }),
 };
 
 Input.defaultProps = {
@@ -104,6 +116,7 @@ Input.defaultProps = {
   disabled: false,
   block: false,
   required: false,
+  validation: {},
 };
 
 export default Input;

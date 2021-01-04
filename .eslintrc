@@ -3,7 +3,7 @@
         "prettier",
         "prettier/react",
         "airbnb",
-        "airbnb/hooks"    
+        "airbnb/hooks"
     ],
     "env": {
         "jest": true,
@@ -36,6 +36,13 @@
         "react-hooks/exhaustive-deps": [
             1
         ],
-        "no-tabs": "warn"
+        "no-tabs": "warn",
+        "no-unused-expressions": [
+            "error",
+            {
+                "allowShortCircuit": true,
+                "allowTernary": true
+            }
+        ]
     }
 }

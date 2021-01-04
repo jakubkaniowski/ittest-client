@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import UserContext, { defaultValue } from './UserContext';
 import { useLoadingContext } from './LoadingContext';
+import { AUTH_STATUS, AUTH_TOKEN_NAME } from '../utils/const';
 
 const UserContextWrapper = ({ children }) => {
   const [user, setUser] = useState(defaultValue.user);
@@ -9,18 +10,17 @@ const UserContextWrapper = ({ children }) => {
 
   const GetUser = () => {
     const { localStorage } = window;
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem(AUTH_TOKEN_NAME)) {
       return {
         user: {
           id: 1,
           name: 'user',
-          accountType: 'STUDENT',
         },
-        status: 'ok',
+        status: AUTH_STATUS.success,
       };
     }
     return {
-      status: 'bad',
+      status: AUTH_STATUS.fail,
       message: 'no user',
     };
   };
@@ -30,7 +30,7 @@ const UserContextWrapper = ({ children }) => {
       loadingContext({ isLoading: true });
       const response = await GetUser();
       const { user: currentUser, status, message } = response;
-      if (status === 'ok') {
+      if (status === AUTH_STATUS.success) {
         setUser(currentUser);
       } else {
         throw new Error(message);
