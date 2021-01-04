@@ -51,10 +51,6 @@ const StudentTest = () => {
               },
             ],
             correctAnswer: 'D',
-            yourAnswer: {
-              textValue: '',
-            },
-            answered: false,
           },
           {
             id: 1,
@@ -79,10 +75,6 @@ const StudentTest = () => {
               },
             ],
             correctAnswer: 'D',
-            yourAnswer: {
-              textValue: '',
-            },
-            answered: false,
             image: 'https://egzamin-informatyk.pl/e14/338.jpg',
           },
         ],

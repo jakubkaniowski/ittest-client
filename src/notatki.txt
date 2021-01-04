@@ -1,7 +1,0 @@
-https://run.mocky.io/v3/7c188898-993c-4375-908a-7bdf0d23e2d0
-
-https://run.mocky.io/v3/0d67789b-a825-44af-91f4-3bc241a4779a - html
-
-https://run.mocky.io/v3/7d1930b3-6fc9-4761-9b85-57d3aa0fbbca - css
-
-https://run.mocky.io/v3/e64d0c9e-abf1-4ded-96c0-bb405c408d45 - js

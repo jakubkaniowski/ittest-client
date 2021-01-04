@@ -16,13 +16,12 @@ const Paragraph = ({ children, align, bold }) => (
 );
 
 Paragraph.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   align: PropTypes.string,
   bold: PropTypes.bool,
 };
 
 Paragraph.defaultProps = {
-  children: 'Paragraph',
   align: 'left',
   bold: false,
 };

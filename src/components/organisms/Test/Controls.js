@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import TestContext from '../../../context/TestContext';
+import { COLOR_NAMES } from '../../../utils/const';
 import Button from '../../atoms/Button/Button';
 
 const StyledWrapper = styled.div`
@@ -31,15 +32,19 @@ const Controls = () => {
 
   return (
     <StyledWrapper>
-      <Button color="danger" onClick={cancelTest}>
+      <Button color={COLOR_NAMES.danger} onClick={cancelTest}>
         Anuluj test
       </Button>
       <StyledControls>
-        <Button color="secondary" onClick={handlePrev} disabled={activeStep === 0}>
+        <Button color={COLOR_NAMES.secondary} onClick={handlePrev} disabled={activeStep === 0}>
           &lt;
         </Button>
         &nbsp;
-        <Button color="secondary" onClick={handleNext} disabled={activeStep === stepsCount - 1}>
+        <Button
+          color={COLOR_NAMES.secondary}
+          onClick={handleNext}
+          disabled={activeStep === stepsCount - 1}
+        >
           &gt;
         </Button>
       </StyledControls>

@@ -7,9 +7,10 @@ import StudentLearn from '../pages/Student/StudentLearn';
 import StudentLearnCategory from '../pages/Student/StudentLearnCategory';
 import StudentTests from '../pages/Student/StudentTests';
 import StudentTest from '../pages/Student/StudentTest';
+import { AUTH_TOKEN_NAME } from '../utils/const';
 
 export const RouteWithSubRoutes = (route = {}) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem(AUTH_TOKEN_NAME);
 
   if (route.authorize === true && !token) {
     setTimeout(() => {
@@ -46,7 +47,14 @@ export const RenderRoutes = ({ routes }) => (
   </Switch>
 );
 
-export const PathCreator = ({ path = '' }) => `/${path}`;
+export const PathCreator = ({
+  pathname = '', search = '', state = {}, hash = '',
+}) => ({
+  pathname,
+  search,
+  state,
+  hash,
+});
 
 export const ROUTES = [
   {

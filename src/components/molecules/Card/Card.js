@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   background-color: ${({ bgColor, theme }) => (bgColor ? `rgba(${theme.colors[bgColor]})` : `rgba(${theme.colors.white})`)};
-  border-radius: ${({ rounded }) => (rounded ? '1em' : '0')};
+  border-radius: 0.7em;
   box-shadow: 0px 0px 20px -5px #000;
   display: flex;
   flex-direction: column;
@@ -15,12 +15,8 @@ const StyledHeader = styled.h1`
   color: ${({ theme }) => `rgb(${theme.colors.white})`};
   padding: 2rem 1rem;
   font-size: 20px;
-
-  ${({ rounded }) => rounded
-    && css`
-      border-top-left-radius: 1rem;
-      border-top-right-radius: 1rem;
-    `};
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
 `;
 
 const StyledBody = styled.article`

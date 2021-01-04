@@ -7,8 +7,7 @@ import { useHistory } from 'react-router-dom';
 import logo from '../../../theme/logo.png';
 import Button from '../../atoms/Button/Button';
 import { collapseElement, expandSection } from '../../../utils/size-utils';
-import { useUserContext } from '../../../context/UserContext';
-import StudentMenu from '../../../pages/Student/StudentMenu';
+import { AUTH_TOKEN_NAME } from '../../../utils/const';
 
 const StyledWrapper = styled.header`
   display: flex;
@@ -73,24 +72,14 @@ const StyledMenuItem = styled.a`
 const Navbar = () => {
   const [expanded, setExpanded] = useState(false);
   const styledMenuRef = useRef(null);
-  const { accountType } = useUserContext();
   const history = useHistory();
-  let menu;
-
-  switch (accountType) {
-    case 'student':
-      menu = <StudentMenu />;
-      break;
-    default:
-      break;
-  }
 
   const handleSetExpanded = () => {
     setExpanded((prevExpanded) => !prevExpanded);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem(AUTH_TOKEN_NAME);
     history.push('/');
   };
 
@@ -109,7 +98,7 @@ const Navbar = () => {
         <FontAwesomeIcon icon={faBars} cursor="pointer" />
       </MenuToggler>
       <StyledMenu expanded={expanded} ref={styledMenuRef}>
-        {menu}
+        <StyledMenu />
         <StyledMenuItem href="" onClick={logout}>
           <FontAwesomeIcon icon={faSignOutAlt} cursor="pointer" />
         </StyledMenuItem>

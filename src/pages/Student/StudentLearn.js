@@ -92,9 +92,11 @@ const StudentLearn = () => {
           {categories.map((category) => {
             const { id, title, description } = category;
             return (
-              <StyledCard key={id} header={title}>
+              <StyledCard rounded key={id} header={title}>
                 <StyledParagraph>{description}</StyledParagraph>
-                <StyledLink href={PathCreator({ path: `student/learn/${title.toLowerCase()}` })}>
+                <StyledLink
+                  href={PathCreator({ pathname: `student/learn/${title.toLowerCase()}` })}
+                >
                   Przejdź do kategorii
                 </StyledLink>
               </StyledCard>

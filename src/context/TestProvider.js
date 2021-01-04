@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import TestContext, { defaultValue } from './TestContext';
-import { checkIfExists } from '../utils/array-utils';
+import { SetAnswer } from '../actions/TestActions/test.actions';
+import TestReducer, { initialState } from '../reducers/TestReducer/TestReducer';
 
 const StyledWrapper = styled.div`
   display: grid;
@@ -13,34 +14,7 @@ const StyledWrapper = styled.div`
 
 const TestProvider = ({ data, children }) => {
   const [currentStep, setCurrentStep] = useState(defaultValue.activeStep);
-  const [state, dispatch] = useReducer(
-    (currentState, action) => {
-      const { type, payload } = action;
-      switch (type) {
-        case 'answer': {
-          const { value } = payload.data;
-          const exists = checkIfExists({ array: currentState.answers, item: value });
-          if (exists) {
-            const updatedAnswers = currentState.answers.map((item) => {
-              const { id } = item;
-              return id === value.id ? value : item;
-            });
-            return {
-              ...currentState,
-              answers: updatedAnswers,
-            };
-          }
-          return {
-            ...currentState,
-            answers: [...currentState.answers, value],
-          };
-        }
-        default:
-          return currentState;
-      }
-    },
-    { answers: [] },
-  );
+  const [state, dispatch] = useReducer(TestReducer, initialState);
   const history = useHistory();
 
   const handleStep = ({ stepId }) => {
@@ -61,17 +35,8 @@ const TestProvider = ({ data, children }) => {
   });
 
   const handleAnswer = ({ id, answer }) => {
-    const newAnwser = answerCreator({ id, answer });
-
-    dispatch({
-      type: 'answer',
-      payload: {
-        data: {
-          key: 'answers',
-          value: newAnwser,
-        },
-      },
-    });
+    const newAnswer = answerCreator({ id, answer });
+    SetAnswer({ newAnswer })(dispatch);
   };
 
   const getCurrentAnswer = () => state.answers.find((answer) => answer.id === data[currentStep].id);
@@ -84,6 +49,7 @@ const TestProvider = ({ data, children }) => {
 
   const endTest = () => {
     // TODO
+
     history.goBack();
   };
 

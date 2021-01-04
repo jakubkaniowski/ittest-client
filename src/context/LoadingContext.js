@@ -4,7 +4,13 @@ import Loading from '../utils/Loading';
 
 const LoadingContext = createContext();
 
-export const useLoadingContext = () => useContext(LoadingContext);
+export const useLoadingContext = () => {
+  const context = useContext(LoadingContext);
+  if (!context) {
+    throw new Error('Loading context not found');
+  }
+  return context;
+};
 
 const LoadingContextWrapper = ({ children }) => {
   const [toggle, handleToggle] = useState(false);

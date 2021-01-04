@@ -6,6 +6,7 @@ import Card from '../../components/molecules/Card/Card';
 import AuthTemplate from '../../components/templates/AuthTemplate';
 import logo from '../../theme/logo.png';
 import { AUTH_TYPES } from '../../utils/const';
+import animate, { FlipWrapper } from '../../utils/flipAnimation';
 
 const StyledLogo = styled.img`
   margin: 0 auto;
@@ -14,14 +15,20 @@ const StyledLogo = styled.img`
 const StyledCard = styled(Card)`
   max-width: 95vw;
   min-width: 40vw;
-  border-radius: 0.8em;
 `;
 
 const Auth = () => {
   const [currentRoute, setCurrentView] = useState('login');
+  const ref = React.useRef();
 
   const handleSetCurrentView = ({ view }) => {
-    setCurrentView(view);
+    animate({
+      delay: 800,
+      callback: () => {
+        setCurrentView(view);
+      },
+      passedRef: ref,
+    });
   };
 
   let Component;
@@ -38,10 +45,12 @@ const Auth = () => {
 
   return (
     <AuthTemplate>
-      <StyledCard>
-        <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
-        {Component}
-      </StyledCard>
+      <FlipWrapper ref={ref}>
+        <StyledCard>
+          <StyledLogo src={logo} alt="ItTest logo" width="200" height="200" />
+          {Component}
+        </StyledCard>
+      </FlipWrapper>
     </AuthTemplate>
   );
 };

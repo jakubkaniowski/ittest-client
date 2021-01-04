@@ -12,7 +12,8 @@ export const theme = {
   fontSizes: {
     xs: '0.75rem',
     s: '1rem',
-    m: '1.6rem',
+    ms: '1.25rem',
+    m: '1.5rem',
     l: '2rem',
     xl: '4rem',
   },

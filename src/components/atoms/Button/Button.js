@@ -38,12 +38,6 @@ const styles = css`
   }
 `;
 
-const StyledLink = styled.a.attrs((props) => ({
-  className: [...props.additionalClass].join(' ') || '',
-}))`
-  ${styles}
-`;
-
 const StyledButton = styled.button.attrs((props) => ({
   type: props.type || 'button',
   className: [...props.additionalClass].join(' ') || '',
@@ -52,29 +46,19 @@ const StyledButton = styled.button.attrs((props) => ({
 `;
 
 const Button = (props) => {
-  const { children, href, link } = props;
-  return !link ? (
-    <StyledButton {...props}>{children}</StyledButton>
-  ) : (
-    <StyledLink href={href} {...props}>
-      {children}
-    </StyledLink>
-  );
+  const { children } = props;
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   type: PropTypes.string,
   additionalClass: PropTypes.arrayOf(PropTypes.string),
-  href: PropTypes.string,
-  link: PropTypes.bool,
 };
 
 Button.defaultProps = {
   type: 'button',
   additionalClass: ['button'],
-  href: '',
-  link: false,
 };
 
 export default Button;
