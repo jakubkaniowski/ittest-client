@@ -20,17 +20,17 @@ export const createAxiosInstance = () => {
   });
 
   instance.interceptors.request.use((config) => {
-    const localConfig = config;
+    const localConfig = { ...config };
     const { method } = localConfig;
     let objName = 'data';
 
     switch (method.toLowerCase()) {
+      case 'delete':
       case 'get':
         objName = 'params';
         break;
 
       case 'post':
-      case 'delete':
         objName = 'data';
         break;
       default:
@@ -38,7 +38,7 @@ export const createAxiosInstance = () => {
     }
 
     if (localConfig[objName] && localConfig[objName].useAuthorization === true) {
-      const token = window.localStorage.get({ key: AUTH_TOKEN_NAME });
+      const token = window.localStorage.getItem(AUTH_TOKEN_NAME);
       localConfig.headers.Authorization = token ? `Bearer ${token}` : '';
       localConfig[objName].useAuthorization = undefined;
     }

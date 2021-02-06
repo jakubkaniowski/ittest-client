@@ -7,6 +7,7 @@ import AuthTemplate from '../../components/templates/AuthTemplate';
 import logo from '../../theme/logo.png';
 import { AUTH_TYPES } from '../../utils/const';
 import animate, { FlipWrapper } from '../../utils/flipAnimation';
+import ForgotPassword from './forgot/ForgotPassword';
 
 const StyledLogo = styled.img`
   margin: 0 auto;
@@ -34,10 +35,13 @@ const Auth = () => {
   let Component;
   switch (currentRoute.toLowerCase()) {
     case AUTH_TYPES.login:
-      Component = <Login setCurrentView={handleSetCurrentView} currentRoute={currentRoute} />;
+      Component = <Login setCurrentView={handleSetCurrentView} />;
       break;
     case AUTH_TYPES.register:
-      Component = <Register setCurrentView={handleSetCurrentView} currentRoute={currentRoute} />;
+      Component = <Register setCurrentView={handleSetCurrentView} />;
+      break;
+    case AUTH_TYPES.forgot:
+      Component = <ForgotPassword setCurrentView={handleSetCurrentView} />;
       break;
     default:
       break;

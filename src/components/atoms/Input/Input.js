@@ -106,7 +106,7 @@ Input.propTypes = {
   block: PropTypes.bool,
   required: PropTypes.bool,
   validation: PropTypes.shape({
-    errors: PropTypes.array,
+    errors: PropTypes.object,
     message: PropTypes.string,
   }),
 };

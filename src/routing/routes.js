@@ -8,6 +8,9 @@ import StudentLearnCategory from '../pages/Student/StudentLearnCategory';
 import StudentTests from '../pages/Student/StudentTests';
 import StudentTest from '../pages/Student/StudentTest';
 import { AUTH_TOKEN_NAME } from '../utils/const';
+import StudentTestResult from '../pages/Student/StudentTestResult';
+import ForgotPassword from '../pages/Auth/forgot/ForgotPassword';
+import RecoverPassword from '../pages/Auth/recoverPassword/RecoverPassword';
 
 export const RouteWithSubRoutes = (route = {}) => {
   const token = localStorage.getItem(AUTH_TOKEN_NAME);
@@ -31,8 +34,8 @@ export const RouteWithSubRoutes = (route = {}) => {
 
 export const UnauthorizedComponent = () => (
   <div>
-    <h2>403 Unauthorized.</h2>
-    Redirecting...
+    <h2>403 Brak autoryzacji</h2>
+    Przekierowywanie...
     <br />
     <br />
   </div>
@@ -63,6 +66,27 @@ export const ROUTES = [
     exact: true,
     authorize: false,
     component: Auth,
+  },
+  {
+    path: '/password',
+    key: 'AUTH',
+    exact: false,
+    authorize: false,
+    component: RenderRoutes,
+    routes: [
+      {
+        path: '/password/forgot',
+        key: 'APP_AUTH_FORGOT',
+        exact: true,
+        component: ForgotPassword,
+      },
+      {
+        path: '/password/recoverPassword',
+        key: 'APP_AUTH_RECOVER',
+        exact: true,
+        component: RecoverPassword,
+      },
+    ],
   },
   {
     path: '/student',
@@ -119,6 +143,14 @@ export const ROUTES = [
             authorize: true,
             role: 'STUDENT',
             component: StudentTest,
+          },
+          {
+            path: '/student/tests/:id/result',
+            key: 'APP_STUDENT_TESTS_TEST_RESULT',
+            exact: true,
+            authorize: true,
+            role: 'STUDENT',
+            component: StudentTestResult,
           },
         ],
       },

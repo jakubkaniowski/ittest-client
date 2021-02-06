@@ -5,8 +5,8 @@ import Progress from './Progress';
 import Question from './Question';
 import Controls from './Controls';
 
-const Test = ({ data }) => (
-  <TestProvider data={data}>
+const Test = ({ test }) => (
+  <TestProvider test={test}>
     <Progress />
     <Question />
     <Controls />
@@ -14,11 +14,11 @@ const Test = ({ data }) => (
 );
 
 Test.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  test: PropTypes.arrayOf(PropTypes.object),
 };
 
 Test.defaultProps = {
-  data: [],
+  test: [],
 };
 
 export default Test;

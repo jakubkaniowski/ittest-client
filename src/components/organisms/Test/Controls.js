@@ -11,10 +11,11 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledControls = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
   @media (max-width: 768px) {
     order: -1;
-    display: flex;
-    flex: 1;
     justify-content: space-between;
   }
 `;
@@ -28,13 +29,16 @@ const Controls = () => {
     activeStep,
     stepsCount,
     answers,
+    isActiveTest,
   } = useContext(TestContext);
 
   return (
     <StyledWrapper>
-      <Button color={COLOR_NAMES.danger} onClick={cancelTest}>
-        Anuluj test
-      </Button>
+      {isActiveTest && (
+        <Button color={COLOR_NAMES.danger} onClick={cancelTest}>
+          Anuluj test
+        </Button>
+      )}
       <StyledControls>
         <Button color={COLOR_NAMES.secondary} onClick={handlePrev} disabled={activeStep === 0}>
           &lt;
@@ -48,9 +52,11 @@ const Controls = () => {
           &gt;
         </Button>
       </StyledControls>
-      <Button onClick={endTest} disabled={answers.length !== stepsCount}>
-        Zakończ test
-      </Button>
+      {isActiveTest && (
+        <Button onClick={endTest} disabled={answers.length !== stepsCount}>
+          Zakończ test
+        </Button>
+      )}
     </StyledWrapper>
   );
 };
