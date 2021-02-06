@@ -1,3 +1,4 @@
+import { darken } from 'polished';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import TestContext from '../../../context/TestContext';
@@ -17,10 +18,19 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  background-color: ${({ stepStatus }) => (stepStatus === false ? '#fff' : 'green')};
+  background-color: ${({ theme, stepStatus }) => (stepStatus === false ? '#fff' : `rgb(${theme.colors.primary})`)};
   color: ${({ stepStatus }) => (stepStatus === false ? '#000' : '#fff')};
-  border: 1px solid #000;
+  border: 1px solid
+    ${({ theme, stepStatus }) => (stepStatus === false
+    ? darken(0.4, `rgb(${theme.colors.gray})`)
+    : darken(0.15, `rgb(${theme.colors.primary})`))};
   padding: 6px;
+
+  ${({ theme, current }) => current
+    && `
+    border-color: rgb(${theme.colors.secondary});
+    border-width: 2px;
+  `}
 
   @media (max-width: 768px) {
     grid-row: 1;
@@ -28,14 +38,25 @@ const StyledButton = styled(Button)`
 `;
 
 const Progress = () => {
-  const { data, answers, handleStep } = useContext(TestContext);
+  const {
+    data, activeStep, answers, handleStep,
+  } = useContext(TestContext);
   return (
     <StyledWrapper>
       {data.map((step, index) => {
         const { id } = step;
-        const isAnswered = checkIfExists({ array: answers, item: step });
+        const isAnswered = checkIfExists({
+          array: answers,
+          item: step,
+          fieldToCompare: 'question_id',
+        });
         return (
-          <StyledButton stepStatus={isAnswered} key={id} onClick={() => handleStep({ stepId: id })}>
+          <StyledButton
+            stepStatus={isAnswered}
+            current={index === activeStep}
+            key={id}
+            onClick={() => handleStep({ stepId: index })}
+          >
             {index + 1}
           </StyledButton>
         );

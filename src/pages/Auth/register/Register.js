@@ -1,6 +1,7 @@
 import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import Input from '../../../components/atoms/Input/Input';
 import Button from '../../../components/atoms/Button/Button';
 import { AUTH_TYPES } from '../../../utils/const';
@@ -14,6 +15,18 @@ const StyledRow = styled.div`
   flex-wrap: wrap;
 `;
 
+const StyledMessage = styled.div`
+  margin-top: 10px;
+  padding: 1.6rem 2.2rem;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  color: ${({ theme }) => `rgb(${theme.colors.white})`};
+  background-color: ${({ status, theme }) => (status !== 200 && status !== 201
+    ? `rgb(${theme.colors.danger})`
+    : `rgb(${theme.colors.primary})`)};
+  font-size: ${({ theme }) => theme.fontSizes.ms};
+`;
+
 const Register = ({ setCurrentView }) => {
   const [input, setInputValue] = useReducer((value, newValue) => ({ ...value, ...newValue }), {
     name: '',
@@ -23,6 +36,7 @@ const Register = ({ setCurrentView }) => {
   });
   const [validation, setValidation] = useState({});
   const loading = useLoadingContext();
+  const history = useHistory();
 
   const onChange = (event) => {
     const { name, value } = event.target;
@@ -36,9 +50,12 @@ const Register = ({ setCurrentView }) => {
 
       const { message, status } = response;
 
-      if (!status || status !== 200) {
+      if (!status || status !== 201) {
         throw new Error(message);
       }
+
+      setValidation({ message: 'Pomyślna rejestracja. Przekierowanie nastąpi za chwilę.', status });
+      setTimeout(() => history.push('/'), 3000);
     } catch (error) {
       const { errors, message } = error.response.data;
       const msg = message || 'Register: Unknown error.';
@@ -103,6 +120,9 @@ const Register = ({ setCurrentView }) => {
           Logowanie
         </Button>
       </StyledRow>
+      {validation.message && (
+        <StyledMessage status={validation.status}>{validation.message}</StyledMessage>
+      )}
     </form>
   );
 };

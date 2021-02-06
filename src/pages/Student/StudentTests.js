@@ -7,6 +7,8 @@ import Card from '../../components/molecules/Card/Card';
 import { useLoadingContext } from '../../context/LoadingContext';
 import Paragraph from '../../components/atoms/Paragraph/Paragraph';
 import Button from '../../components/atoms/Button/Button';
+import TestServices from '../../services/TestServices';
+import { COLOR_NAMES } from '../../utils/const';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -40,7 +42,7 @@ const StyledRow = styled.div`
 const StyledGrid = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 15px;
 `;
 
@@ -50,26 +52,32 @@ const StyledCard = styled(Card)`
 `;
 
 const StudentTests = () => {
-  const [tests, setTests] = useState([]);
+  const [pendingTests, setPendingTests] = useState([]);
+  const [completedTests, setCompletedTests] = useState([]);
   const loadingContext = useLoadingContext();
   const location = useLocation();
   const history = useHistory();
 
-  const handleSetTests = ({ testsArray = [] }) => {
-    setTests(testsArray);
-  };
-
   const getTests = async () => {
     try {
       loadingContext({ isLoading: true });
+      const pendingTestsResponse = await TestServices.getAllPendingTests();
+      const completedTestsResponse = await TestServices.getAllCompletedTests();
 
-      handleSetTests({
-        testsArray: [
-          { id: 1, topic: 'Test 1', lastAnswered: 15 },
-          { id: 2, topic: 'Test 2', lastAnswered: 4 },
-          { id: 3, topic: 'Test 3', lastAnswered: 24 },
-        ],
-      });
+      setPendingTests(pendingTestsResponse.data);
+      setCompletedTests(completedTestsResponse.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      loadingContext({ isLoading: false });
+    }
+  };
+
+  const removeTest = async ({ id }) => {
+    try {
+      loadingContext({ isLoading: true });
+      await TestServices.removeSingleTest({ id });
+      await getTests();
     } catch (error) {
       console.error(error);
     } finally {
@@ -80,13 +88,22 @@ const StudentTests = () => {
   const beginTest = async () => {
     try {
       loadingContext({ isLoading: true });
-      const number = Math.round(Math.random() * 10);
+      const response = await TestServices.create();
+      const { id } = response.data;
 
-      handleSetTests({
-        testsArray: [...tests, { id: number, topic: `Topic ${number}`, lastAnswered: 1 }],
-      });
+      history.push(`${location.pathname}/${id}`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      loadingContext({ isLoading: false });
+    }
+  };
 
-      history.push(`${location.pathname}/${number}`);
+  const viewTest = ({ id }) => {
+    try {
+      loadingContext({ isLoading: true });
+
+      history.push(`${location.pathname}/${id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -106,27 +123,74 @@ const StudentTests = () => {
           <StyledParagraph>Wybierz istniejący test lub rozpocznij nowy!</StyledParagraph>
         </StyledHeading>
         <StyledRow>
-          <Button onClick={beginTest} href="">
-            Rozpocznij test
-          </Button>
+          <Button onClick={beginTest}>Rozpocznij test</Button>
         </StyledRow>
         <StyledRow>
           <Paragraph bold>Rozpoczęte testy</Paragraph>
         </StyledRow>
         <StyledRow>
           <StyledGrid>
-            {tests.length ? (
-              tests.map((test) => (
-                <StyledCard rounded key={test.id} header={test.topic}>
-                  <Paragraph>
-                    Ostatnia odpowiedź do pytania nr.
-                    {test.lastAnswered}
-                  </Paragraph>
-                  <br />
-                  <Button href="">Kontynuuj</Button>
-                  <Button color="danger">Usuń</Button>
-                </StyledCard>
-              ))
+            {pendingTests.length ? (
+              pendingTests.map((test) => {
+                const { id, answers_count: answersCount } = test;
+                return (
+                  <StyledCard rounded key={id} header={`Test ${id}`}>
+                    <Paragraph>
+                      <b>
+                        Udzielono
+                        {answersCount}
+                        {' '}
+                        odpowiedzi
+                      </b>
+                    </Paragraph>
+                    <br />
+                    <Button onClick={() => viewTest({ id })}>Kontynuuj</Button>
+                    <Button onClick={() => removeTest({ id })} color="danger">
+                      Usuń
+                    </Button>
+                  </StyledCard>
+                );
+              })
+            ) : (
+              <Paragraph>Brak rozpoczętych testów!</Paragraph>
+            )}
+          </StyledGrid>
+        </StyledRow>
+        <StyledRow>
+          <Paragraph bold>Zakończone testy</Paragraph>
+        </StyledRow>
+        <StyledRow>
+          <StyledGrid>
+            {completedTests.length ? (
+              completedTests.map((test) => {
+                const { id, score, is_passed: isPassed } = test;
+                return (
+                  <StyledCard rounded key={id} header={`Test ${id}`}>
+                    <Paragraph>
+                      <b>
+                        Wynik testu:
+                        {score}
+                        {' '}
+                        / 20
+                      </b>
+                    </Paragraph>
+                    <br />
+                    <Paragraph>
+                      <b>
+                        Status:
+                        {isPassed ? 'Zaliczony' : 'Niezaliczony'}
+                      </b>
+                    </Paragraph>
+                    <br />
+                    <Button color={COLOR_NAMES.secondary} onClick={() => viewTest({ id })}>
+                      SPRAWDŹ
+                    </Button>
+                    <Button onClick={() => removeTest({ id })} color="danger">
+                      Usuń
+                    </Button>
+                  </StyledCard>
+                );
+              })
             ) : (
               <Paragraph>Brak rozpoczętych testów!</Paragraph>
             )}

@@ -23,7 +23,7 @@ const StyledBody = styled.article`
   display: flex;
   height: 100%;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1.5rem;
 `;
 
 const Card = ({

@@ -9,8 +9,10 @@ const StyledParagraph = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.m};
 `;
 
-const Paragraph = ({ children, align, bold }) => (
-  <StyledParagraph align={align} bold={bold}>
+const Paragraph = ({
+  children, align, bold, className,
+}) => (
+  <StyledParagraph align={align} bold={bold} className={className}>
     {children}
   </StyledParagraph>
 );
@@ -19,11 +21,13 @@ Paragraph.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   align: PropTypes.string,
   bold: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 Paragraph.defaultProps = {
   align: 'left',
   bold: false,
+  className: '',
 };
 
 export default Paragraph;

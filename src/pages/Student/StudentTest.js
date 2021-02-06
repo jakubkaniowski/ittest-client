@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { useLoadingContext } from '../../context/LoadingContext';
 import DashboardTemplate from '../../components/templates/DashboardTemplate';
 import Test from '../../components/organisms/Test/Test';
+import TestServices from '../../services/TestServices';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -16,69 +18,22 @@ const StyledRow = styled.div`
 `;
 
 const StudentTest = () => {
-  const [questions, setQuestions] = useState([]);
+  const [test, setTest] = useState(null);
   const loadingContext = useLoadingContext();
+  const { id } = useParams();
 
-  const handleSetQuestions = ({ questionsArray = [] }) => {
-    setQuestions(questionsArray);
+  const handleSetTest = ({ testDetails }) => {
+    setTest(testDetails);
   };
 
-  const getQuestions = async () => {
+  const getTest = async () => {
     try {
       loadingContext({ isLoading: true });
+      const response = await TestServices.getSingleTest({ id });
 
-      handleSetQuestions({
-        questionsArray: [
-          {
-            id: 0,
-            title: 'Która z instrukcji umożliwia wysłanie tekstu do przeglądarki?',
-            answers: [
-              {
-                shortcut: 'A',
-                description: 'type',
-              },
-              {
-                shortcut: 'B',
-                description: 'exit',
-              },
-              {
-                shortcut: 'C',
-                description: 'break',
-              },
-              {
-                shortcut: 'D',
-                description: 'echo',
-              },
-            ],
-            correctAnswer: 'D',
-          },
-          {
-            id: 1,
-            title:
-              'W ramce przedstawiono właściwości pliku graficznego. W celu optymalizacji czasu ładowania rysunku na stronę WWW należy',
-            answers: [
-              {
-                shortcut: 'A',
-                description: 'zmienić proporcje szerokości do wysokości',
-              },
-              {
-                shortcut: 'B',
-                description: 'zmienić format grafiki na CDR',
-              },
-              {
-                shortcut: 'C',
-                description: 'zwiększyć rozdzielczość',
-              },
-              {
-                shortcut: 'D',
-                description: 'zmniejszyć wymiary rysunku',
-              },
-            ],
-            correctAnswer: 'D',
-            image: 'https://egzamin-informatyk.pl/e14/338.jpg',
-          },
-        ],
-      });
+      const { data } = response.data;
+
+      handleSetTest({ testDetails: data });
     } catch (error) {
       console.error(error);
     } finally {
@@ -87,15 +42,15 @@ const StudentTest = () => {
   };
 
   useEffect(() => {
-    getQuestions();
+    getTest();
   }, []);
 
   return (
-    questions.length && (
+    test && (
       <DashboardTemplate>
         <StyledWrapper>
           <StyledRow>
-            <Test data={questions} />
+            <Test test={test} />
           </StyledRow>
         </StyledWrapper>
       </DashboardTemplate>

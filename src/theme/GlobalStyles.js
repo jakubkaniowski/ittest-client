@@ -29,6 +29,12 @@ const GlobalStyles = createGlobalStyle`
         min-height: 100%;
         height: 100%;
     }
+
+    circle {
+        transition: stroke-dashoffset 0.35s;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+    }
 `;
 
 export default GlobalStyles;
