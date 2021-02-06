@@ -14,11 +14,13 @@ const Test = ({ test }) => (
 );
 
 Test.propTypes = {
-  test: PropTypes.arrayOf(PropTypes.object),
-};
-
-Test.defaultProps = {
-  test: [],
+  test: PropTypes.shape({
+    id: PropTypes.number,
+    user_id: PropTypes.number,
+    status: PropTypes.string,
+    answers: PropTypes.arrayOf(PropTypes.object),
+    questions: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 export default Test;
