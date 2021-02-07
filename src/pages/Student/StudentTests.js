@@ -137,10 +137,9 @@ const StudentTests = () => {
                   <StyledCard rounded key={id} header={`Test ${id}`}>
                     <Paragraph>
                       <b>
-                        Udzielono
+                        Udzielono &nbsp;
                         {answersCount}
-                        {' '}
-                        odpowiedzi
+                        &nbsp; odpowiedzi
                       </b>
                     </Paragraph>
                     <br />
@@ -168,16 +167,15 @@ const StudentTests = () => {
                   <StyledCard rounded key={id} header={`Test ${id}`}>
                     <Paragraph>
                       <b>
-                        Wynik testu:
+                        Wynik testu: &nbsp;
                         {score}
-                        {' '}
-                        / 20
+                        &nbsp; / 20
                       </b>
                     </Paragraph>
                     <br />
                     <Paragraph>
                       <b>
-                        Status:
+                        Status:&nbsp;
                         {isPassed ? 'Zaliczony' : 'Niezaliczony'}
                       </b>
                     </Paragraph>
