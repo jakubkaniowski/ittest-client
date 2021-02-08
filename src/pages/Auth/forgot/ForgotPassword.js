@@ -47,10 +47,11 @@ const ForgotPassword = ({ setCurrentView }) => {
       }
 
       setValidation({ message: `${message}. Przekierowanie nastąpi za chwilę.`, status });
+      setTimeout(() => window.location.reload(), 3000);
     } catch (error) {
       const { data } = error.response;
       const errors = data.errors || {};
-      const message = data.message || error.message || 'Login: Unknown error.';
+      const message = data.message || error.message || 'Forgot Password: Unknown error.';
       setValidation({ errors, message, status: 'fail' });
     } finally {
       loading({ isLoading: false });

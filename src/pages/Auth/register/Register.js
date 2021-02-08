@@ -1,7 +1,6 @@
 import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 import Input from '../../../components/atoms/Input/Input';
 import Button from '../../../components/atoms/Button/Button';
 import { AUTH_TYPES } from '../../../utils/const';
@@ -36,7 +35,6 @@ const Register = ({ setCurrentView }) => {
   });
   const [validation, setValidation] = useState({});
   const loading = useLoadingContext();
-  const history = useHistory();
 
   const onChange = (event) => {
     const { name, value } = event.target;
@@ -55,7 +53,7 @@ const Register = ({ setCurrentView }) => {
       }
 
       setValidation({ message: 'Pomyślna rejestracja. Przekierowanie nastąpi za chwilę.', status });
-      setTimeout(() => history.push('/'), 3000);
+      setTimeout(() => window.location.reload(), 3000);
     } catch (error) {
       const { errors, message } = error.response.data;
       const msg = message || 'Register: Unknown error.';

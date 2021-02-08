@@ -39,6 +39,13 @@ const AuthServices = {
       ...details,
     });
   },
+  editProfile: ({ details }) => {
+    const url = '/edit';
+    return axios.put(url, {
+      ...details,
+      useAuthorization: true,
+    });
+  },
 };
 
 export default AuthServices;

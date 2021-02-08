@@ -11,6 +11,8 @@ import { AUTH_TOKEN_NAME } from '../utils/const';
 import StudentTestResult from '../pages/Student/StudentTestResult';
 import ForgotPassword from '../pages/Auth/forgot/ForgotPassword';
 import RecoverPassword from '../pages/Auth/recoverPassword/RecoverPassword';
+import StudentEditProfile from '../pages/Student/StudentEditProfile';
+import StudentStatistics from '../pages/Student/StudentStatistics';
 
 export const RouteWithSubRoutes = (route = {}) => {
   const token = localStorage.getItem(AUTH_TOKEN_NAME);
@@ -119,6 +121,22 @@ export const ROUTES = [
         authorize: true,
         role: 'STUDENT',
         component: StudentLearnCategory,
+      },
+      {
+        path: '/student/profile',
+        key: 'APP_STUDENT_PROFILE',
+        exact: true,
+        authorize: true,
+        role: 'STUDENT',
+        component: StudentEditProfile,
+      },
+      {
+        path: '/student/statistics',
+        key: 'APP_STUDENT_STATISTICS',
+        exact: true,
+        authorize: true,
+        role: 'STUDENT',
+        component: StudentStatistics,
       },
       {
         path: '/student/tests',

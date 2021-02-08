@@ -48,7 +48,7 @@ const StyledParagraph = styled(Paragraph)`
 `;
 
 const StyledScore = styled.span`
-  color: ${({ theme }) => `rgb(${theme.colors.primary})`};
+  color: ${({ theme, isPassed }) => (isPassed ? `rgb(${theme.colors.primary})` : `rgb(${theme.colors.danger})`)};
   padding: 0;
   margin: 1em 0;
 `;
@@ -60,7 +60,7 @@ const StyledRow = styled.div`
 const StyledStatus = styled.span`
   display: block;
   font-size: 2em;
-  color: ${({ theme }) => `rgb(${theme.colors.primary})`};
+  color: ${({ theme, isPassed }) => (isPassed ? `rgb(${theme.colors.primary})` : `rgb(${theme.colors.danger})`)};
 `;
 
 const StyledColumn = styled.div`
@@ -120,25 +120,31 @@ const StudentTestResult = () => {
               <StyledParagraph bold>
                 Status
                 {' '}
-                <StyledStatus>{testResult.is_passed ? 'Zaliczony' : 'Niezaliczony'}</StyledStatus>
+                <StyledStatus isPassed={testResult.is_passed}>
+                  {testResult.is_passed ? 'Zaliczony' : 'Niezaliczony'}
+                </StyledStatus>
               </StyledParagraph>
             </StyledColumn>
             <StyledColumn>
               <StyledScoreHeading>
                 Wynik
                 <br />
-                <StyledScore>
+                <StyledScore isPassed={testResult.is_passed}>
                   {' '}
                   {testResult.score}
                   {' '}
                   / 20
                 </StyledScore>
-                Gratulacje!
               </StyledScoreHeading>
             </StyledColumn>
             <StyledColumn alignmentY="center">
               <StyledParagraph bold>Wynik procentowy</StyledParagraph>
-              <CircleProgress progressTo={testResult.percentage_score} radius={120} stroke={10} />
+              <CircleProgress
+                color={testResult.is_passed ? 'primary' : 'danger'}
+                progressTo={testResult.percentage_score}
+                radius={120}
+                stroke={10}
+              />
             </StyledColumn>
           </StyledGrid>
         </StyledRow>

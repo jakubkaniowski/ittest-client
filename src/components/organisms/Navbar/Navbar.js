@@ -7,6 +7,8 @@ import {
   faGraduationCap,
   faHome,
   faSignOutAlt,
+  faStarHalfAlt,
+  faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { darken } from 'polished';
 import { Link, useHistory } from 'react-router-dom';
@@ -155,6 +157,10 @@ const Navbar = () => {
           <StyledMenuItemLabel>Dashboard</StyledMenuItemLabel>
           <FontAwesomeIcon icon={faHome} cursor="pointer" />
         </StyledMenuItem>
+        <StyledMenuItem to="/student/profile">
+          <StyledMenuItemLabel>Profil</StyledMenuItemLabel>
+          <FontAwesomeIcon icon={faUserCircle} cursor="pointer" />
+        </StyledMenuItem>
         <StyledMenuItem to="/student/tests">
           <StyledMenuItemLabel>Testy</StyledMenuItemLabel>
           <FontAwesomeIcon icon={faFile} cursor="pointer" />
@@ -162,6 +168,10 @@ const Navbar = () => {
         <StyledMenuItem to="/student/learn">
           <StyledMenuItemLabel>Nauka</StyledMenuItemLabel>
           <FontAwesomeIcon icon={faGraduationCap} cursor="pointer" />
+        </StyledMenuItem>
+        <StyledMenuItem to="/student/statistics">
+          <StyledMenuItemLabel>Statystyki</StyledMenuItemLabel>
+          <FontAwesomeIcon icon={faStarHalfAlt} cursor="pointer" />
         </StyledMenuItem>
         <StyledMenuItem onClick={logout} to="">
           <StyledMenuItemLabel>WYLOGUJ</StyledMenuItemLabel>

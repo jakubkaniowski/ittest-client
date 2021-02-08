@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import AuthTemplate from '../../../components/templates/AuthTemplate';
 import Button from '../../../components/atoms/Button/Button';
 import Input from '../../../components/atoms/Input/Input';
@@ -19,6 +19,16 @@ const StyledCard = styled(Card)`
   min-width: 40vw;
 `;
 
+const StyledMessage = styled.div`
+  margin-top: 10px;
+  padding: 1.6rem 2.2rem;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  color: ${({ theme }) => `rgb(${theme.colors.white})`};
+  background-color: ${({ status, theme }) => (status !== 200 ? `rgb(${theme.colors.danger})` : `rgb(${theme.colors.primary})`)};
+  font-size: ${({ theme }) => theme.fontSizes.ms};
+`;
+
 const StyledRow = styled.div`
   display: flex;
   align-items: center;
@@ -31,8 +41,10 @@ const RecoverPassword = () => {
     password: '',
     password_confirmation: '',
   });
+  const [validation, setValidation] = useState({});
   const loading = useLoadingContext();
   const location = useLocation();
+  const history = useHistory();
   const params = useQuery({ params: location.search });
 
   const onChange = (event) => {
@@ -53,9 +65,19 @@ const RecoverPassword = () => {
         details: { ...input, ...queryParameters },
       });
 
-      console.log(response);
+      const { message, status } = response.data;
+
+      if (!status || status !== 200) {
+        throw new Error(message);
+      }
+
+      setValidation({ message: `${message}. Przekierowanie nastąpi za chwilę.`, status });
+      setTimeout(() => history.push('/'), 3000);
     } catch (error) {
-      console.error(error);
+      const { data } = error.response;
+      const errors = data.errors || {};
+      const message = data.message || error.message || 'Recover Password: Unknown error.';
+      setValidation({ errors, message, status: 'fail' });
     } finally {
       loading({ isLoading: false });
     }
@@ -73,6 +95,7 @@ const RecoverPassword = () => {
             label="Nowe hasło"
             value={input.password}
             onChange={onChange}
+            validation={validation}
             required
           />
           <Input
@@ -82,6 +105,7 @@ const RecoverPassword = () => {
             label="Powtórz hasło"
             value={input.password_confirmation}
             onChange={onChange}
+            validation={validation}
             required
           />
           <StyledRow>
@@ -89,6 +113,9 @@ const RecoverPassword = () => {
               Zmień hasło
             </Button>
           </StyledRow>
+          {validation.message && (
+            <StyledMessage status={validation.status}>{validation.message}</StyledMessage>
+          )}
         </form>
       </StyledCard>
     </AuthTemplate>
